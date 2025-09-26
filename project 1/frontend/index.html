@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Docker To-Do App</title>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <input id="task" placeholder="New task">
+  <button onclick="addTask()">Add</button>
+  <ul id="tasks"></ul>
+
+  <script>
+    const apiUrl = 'http://localhost:3000/tasks';
+
+    async function fetchTasks() {
+      const res = await fetch(apiUrl);
+      const tasks = await res.json();
+      const list = document.getElementById('tasks');
+      list.innerHTML = '';
+      tasks.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t.name;
+        li.onclick = () => deleteTask(t._id);
+        list.appendChild(li);
+      });
+    }
+
+    async function addTask() {
+      const name = document.getElementById('task').value;
+      await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+      });
+      document.getElementById('task').value = '';
+      fetchTasks();
+    }
+
+    async function deleteTask(id) {
+      await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+      fetchTasks();
+    }
+
+    fetchTasks();
+  </script>
+</body>
+</html>
