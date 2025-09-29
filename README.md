@@ -37,8 +37,8 @@ This is where I experiment, break things, and build hands-on projects to sharpen
 
 Clone the repo:  
 ```bash
-git clone https://github.com/your-username/docker-kubernetes-playground.git
-cd docker-kubernetes-playground
+git clone https://github.com/gursimran531/Docker-Practice.git
+
 ```
 
 Run a sample Docker project:  
